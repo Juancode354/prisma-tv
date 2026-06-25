@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-oswald);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-space-mono);
+
+  --color-base: #0B0B0F;
+  --color-surface-1: #16161D;
+  --color-surface-2: #1E1F28;
+  --color-hairline: #2A2C37;
+
+  --color-ink-hi: #F4F4F6;
+  --color-ink-mid: #A0A4AF;
+  --color-ink-low: #6B6F7B;
+
+  --color-prisma-300: #C4B5FD;
+  --color-prisma-500: #8B5CF6;
+  --color-prisma-600: #7C3AED;
+
+  --color-rec: #EF4444;
+  --color-vida: #E5484D;
+  --color-sanidade: #8B5CF6;
+  --color-impulso: #F5A623;
+  --color-sucesso: #34D399;
+  --color-alerta: #F59E0B;
+  --color-morte: #6B7280;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-base);
+  color: var(--color-ink-hi);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Splash ---- */
+.splash-out {
+  animation: splash-out 2.6s ease forwards;
+}
+.splash-mark {
+  animation: splash-mark-in 1s ease-out both;
+}
+.splash-line {
+  transform-origin: center;
+  animation: splash-line-in 0.8s ease-out 0.5s both;
+}
+
+@keyframes splash-out {
+  0%, 78% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+@keyframes splash-mark-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes splash-line-in {
+  from { opacity: 0; transform: scaleX(0); }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-mark,
+  .splash-line {
+    animation: splash-fade-in 0.5s ease both;
+    transform: none;
+  }
+}
+@keyframes splash-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ---- Atmosfera CRT (Bloco 12) ---- */
+/* varredura vertical: atravessa a tela inteira, de cima até embaixo */
+.crt-sweep {
+  animation: crt-sweep 2.6s linear infinite;
+}
+@keyframes crt-sweep {
+  0%   { transform: translateY(-15vh); }
+  100% { transform: translateY(115vh); }
+}
+
+/* leve tremor do chiado, bem sutil */
+.crt-flicker {
+  animation: crt-flicker 0.18s steps(2, end) infinite;
+}
+@keyframes crt-flicker {
+  0%   { opacity: 0.07; }
+  100% { opacity: 0.10; }
+}
+
+/* movimento reduzido: para o chiado e some com a barra */
+@media (prefers-reduced-motion: reduce) {
+  .crt-sweep { animation: none; opacity: 0; }
+  .crt-flicker { animation: none; }
+}
