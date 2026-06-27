@@ -11,7 +11,8 @@
 **Etapa 1 — concluída e publicada (✅).** App no ar, instalável e fiel à identidade da PRISMA TV.
 
 - ✅ App publicado na **Vercel** com link HTTPS fixo: **https://prisma-tv-pi.vercel.app**
-- ✅ Projeto **Next.js + TypeScript + Tailwind + `src/`** criado e versionado no GitHub (deploy automático a cada `push` no `main`)
+- ✅ Projeto **Next.js + TypeScript + Tailwind + `src/`** criado e **versionado no GitHub**
+- ✅ **Deploy de produção feito via Vercel CLI** (comando `vercel`/`vercel --prod`). ⚠️ **O deploy automático por `push` no `main` ainda NÃO está configurado** — a Vercel não foi conectada ao GitHub (houve um problema de login/conexão na importação). Por ora, **publicar uma nova versão exige rodar o deploy pela CLI** manualmente
 - ✅ Fontes **Oswald / Inter / Space Mono** (via `next/font`) e **tokens** de cor no Tailwind
 - ✅ **Componentes** base em `src/components/ui/` (RecBadge, Timecode, SpectralLine, BrandMark, Field, PrimaryButton, ScreenAtmosphere, PrismaSplash)
 - ✅ **Atmosfera CRT** funcionando (chiado, scanlines, vinheta, barra de varredura vertical; respeita `prefers-reduced-motion`)
@@ -84,7 +85,7 @@ O **pilar arquitetural invisível** é a **visibilidade**: quase toda informaç�
 - **TypeScript.**
 - **Tailwind CSS** (com os tokens da direção visual).
 - **Supabase** (PostgreSQL + Auth + Storage) — configuração profunda só quando a fase exigir (**Etapa 2 em diante**).
-- **Vercel** (deploy, link HTTPS fixo) — **ativo**: https://prisma-tv-pi.vercel.app
+- **Vercel** (deploy, link HTTPS fixo) — **ativo**: https://prisma-tv-pi.vercel.app *(deploy atual feito via **Vercel CLI**; a integração GitHub→Vercel ainda **não** está conectada — deploy automático por push pendente)*
 - **Entrada por QR Code / link HTTPS.**
 
 **Barreira de segurança principal (V1):** o celular **nunca** fala direto com o banco. Toda leitura/escrita passa pela **camada de servidor do Next.js**, autenticada pelo token do Supabase, que confere o papel do usuário na campanha antes de responder. **Segunda barreira (defesa em profundidade):** Row Level Security (RLS) do Supabase em todas as tabelas.
@@ -247,10 +248,10 @@ Roadmap de implementação (cada passo entrega algo visível e testável; não s
 7. **Rolagem digital + registro manual:** DiceRoller, modificador único, Adrenalina, Impulso; modo manual.
 8. **Sessões + diário:** abrir/fechar, registros vinculados, filtros.
 9. **Painel da Mestra:** visão de mesa, ajustes, validação de rolagens, NPCs simples, visibilidade.
-10. **Publicação + QR + ajustes finais:** já temos deploy contínuo na Vercel; faltam o QR Code de entrada e o polimento → **V1 pronta para a mesa**.
+10. **Publicação + QR + ajustes finais:** já há **deploy de produção na Vercel (via CLI)**; faltam **conectar a Vercel ao GitHub** (para o deploy automático por push), o **QR Code** de entrada e o polimento → **V1 pronta para a mesa**.
 
 **Regra de ouro:** uma fase só começa quando a anterior está funcionando e na mão da mesa.
 
 ---
 
-*Fim da Memória do Projeto. Este arquivo deve ser atualizado sempre que uma decisão nova for aprovada, para que o contexto nunca se perca. Última atualização: conclusão e publicação da Etapa 1.*
+*Fim da Memória do Projeto. Este arquivo deve ser atualizado sempre que uma decisão nova for aprovada, para que o contexto nunca se perca. Última atualização: conclusão e publicação da Etapa 1; correção do método de publicação (deploy via **Vercel CLI**, integração GitHub→Vercel ainda não conectada).*
