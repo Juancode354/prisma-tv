@@ -8,6 +8,6 @@ export const BRAND = {
 } as const;
 
 export const REFERENCE = {
-  ficha: "/reference/ficha-oficial.jpeg",
-  npcAngelo: "/reference/npc-angelo.jpeg"
+  ficha: "/reference/ficha.jpeg",
+  npcAngelo: "/reference/Angelo.jpeg"
 } as const;
