@@ -25,7 +25,11 @@ export default async function InicioPage() {
     .eq("id", user.id)
     .single();
 
-  const role = profile?.role ? String(profile.role).toUpperCase() : null;
+  const role = profile?.role ? String(profile.role) : null;
+  const normalizedRole = role ? role.toLowerCase() : null;
+  const roleLabel = role ? role.toUpperCase() : null;
+  const isMestra = normalizedRole === "mestra";
+  const hasProfile = !profileError && profile && role;
 
   return (
     <main className="relative isolate flex min-h-screen flex-col items-center justify-center overflow-hidden px-6">
@@ -54,12 +58,23 @@ export default async function InicioPage() {
 
           <div className="rounded-lg border border-prisma-500/30 bg-ink-hi/5 px-4 py-4">
             <p className="text-[10px] uppercase tracking-[0.2em] text-ink-low">Perfil</p>
-            {profileError || !profile ? (
+            {!hasProfile ? (
               <p className="mt-2 text-rec">Perfil não encontrado ou inacessível.</p>
             ) : (
-              <p className="mt-2 text-base">Papel: {role}</p>
+              <p className="mt-2 text-base">Papel: {roleLabel}</p>
             )}
           </div>
+
+          {hasProfile ? (
+            <div className="rounded-lg border border-prisma-500/30 bg-ink-hi/5 px-4 py-4">
+              <p className="text-base">{isMestra ? "Painel da Mestra" : "Sua ficha"}</p>
+              <p className="mt-2 text-sm leading-relaxed text-ink-mid">
+                {isMestra
+                  ? "Aqui ficará o controle da campanha: fichas da mesa, sessões e ajustes. (Em breve.)"
+                  : "Aqui ficará seu personagem: atributos, perícias e trackers. (Em breve.)"}
+              </p>
+            </div>
+          ) : null}
 
           <form action={signOut}>
             <PrimaryButton type="submit">Sair</PrimaryButton>
