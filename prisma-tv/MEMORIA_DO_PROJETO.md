@@ -36,7 +36,7 @@
 
 **Decisões/limitações registradas da Etapa 2:**
 
-- **Confirmação de e-mail NÃO implementada.** O painel atual exige **custom SMTP** para editar templates, e não usamos SMTP nesta etapa. Por isso o **"Confirm email" foi desativado** no Supabase, permitindo o fluxo de cadastro/login **sem e-mail**. *(Caso, na prática, a confirmação tenha permanecido ativa e os usuários sejam confirmados manualmente no painel, trocar esta frase.)* O fluxo de e-mail real (SMTP/template ou Send Email Hook) e a rota `/auth/confirm` ficam para o futuro.
+- **Confirmação de e-mail real (por link) NÃO implementada na Etapa 2.** O painel atual exige **custom SMTP** para editar templates, e não usamos SMTP nesta etapa. A opção **"Confirm email" foi localizada e desativada** no Supabase para esta etapa, de modo que **cadastro e login funcionam sem confirmação** — e **não** há confirmação manual de usuários no painel. O fluxo de e-mail real (SMTP + template, ou Send Email Hook) e a rota `/auth/confirm` ficam para uma etapa futura, se necessário.
 - **A Mestra ainda é definida manualmente** no painel do Supabase (trocar `profile.role` para `mestra` no Table Editor). Não há tela de "promover usuário" na V1.
 - **Deploy continua via Vercel CLI** (`vercel --prod`); a integração **GitHub→Vercel não está conectada**, então `git push` não republica.
 - **Navegação ainda não implementada:** a home (`/`) não tem botão para `/login`/`/inicio` (acesso digitando a rota). Não é bug; é passo futuro.
