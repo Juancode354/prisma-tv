@@ -2,7 +2,7 @@
 
 *Documento-âncora da V1. Resume tudo que já foi decidido e aprovado, para não se perder contexto entre conversas. Sempre que houver dúvida sobre "o que combinamos", a resposta está aqui.*
 
-> **Status:** fundação de produto, modelo de dados e direção visual **fechados**. Moodboard **V1.4 congelado** como referência visual oficial. **Etapa 1 (fundação visual + PWA)** e **Etapa 2 (autenticação real com Supabase)** **CONCLUÍDAS e PUBLICADAS** na Vercel: **https://prisma-tv-pi.vercel.app**. Próximo passo combinado: **Etapa 3 — campanha e convite** (ainda **não** iniciada; começará por planejamento técnico antes do código).
+> **Status:** fundação de produto, modelo de dados e direção visual **fechados**. Moodboard **V1.4 congelado** como referência visual oficial. **Etapa 1 (fundação visual + PWA)** e **Etapa 2 (autenticação real com Supabase)** **CONCLUÍDAS e PUBLICADAS** na Vercel: **https://prisma-tv-pi.vercel.app**. **Etapa 3 — campanha e convite — em PLANEJAMENTO:** plano (`PLANO_DA_ETAPA_3.md`) e decisões **aprovados**; ⏳ ainda **sem** banco, convite ou código (próximo passo: Bloco 3.1).
 
 ---
 
@@ -42,9 +42,25 @@
 - **Navegação ainda não implementada:** a home (`/`) não tem botão para `/login`/`/inicio` (acesso digitando a rota). Não é bug; é passo futuro.
 - **Segurança:** o cliente usa a chave **publishable** (pública) + **RLS**; `service_role`/secret **não** é usada. Segredos ficam no `.env.local` (local) e nas variáveis da Vercel — **nunca** no repositório.
 
+**Etapa 3 — campanha e convite — EM PLANEJAMENTO (plano aprovado; ⏳ ainda sem banco/código).**
+
+- 📄 Plano técnico aprovado em **`PLANO_DA_ETAPA_3.md`**. **Nada** foi implementado ainda: **sem** tabela `campaign`/`campaign_member`, **sem** SQL/RLS criados, **sem** convite/código funcional, **sem** alteração em `src/**`.
+- **Decisões aprovadas (a serem implementadas nos blocos 3.1+):**
+  1. Papel efetivo **dentro** da campanha = **`campaign_member.role`**.
+  2. `profile.role` continua como **papel global/base** da conta; dentro de uma campanha, quem manda é `campaign_member.role`.
+  3. Qualquer usuário **autenticado** pode criar uma campanha (V1).
+  4. Quem **cria** a campanha vira **dona/Mestra** daquela campanha.
+  5. A **UI da V1** assume **uma campanha ativa** por vez (o modelo suporta várias).
+  6. Convite por **código curto/link**, **único por campanha**, **regenerável**, **sem expiração** e **sem limite de uso** na V1.
+  7. Entrar com código cria vínculo como **`jogador`**.
+  8. Entrada por convite **idempotente** (já-membro não duplica vínculo).
+  9. `/inicio` pode **refletir o estado da campanha**, mas **sem** virar painel real ainda.
+  10. **Sem** ficha, rolagens, painel completo ou Etapa 4 dentro da Etapa 3.
+- **Cuidado técnico aprovado:** o SQL/RLS de `campaign`↔`campaign_member` usará **função `SECURITY DEFINER`** (ou estratégia equivalente) para evitar **recursão de política**. **Nenhum SQL roda sem revisão prévia.**
+
 **Ainda NÃO existe (propositalmente, fica para as próximas etapas):**
 
-- ❌ **Campanha** e **convite** (Etapa 3).
+- ❌ **Campanha** e **convite** (Etapa 3 — em planejamento; ainda não implementada).
 - ❌ **Demais tabelas do modelo** (só `profile` existe; as outras ~13 vêm fase a fase).
 - ❌ **Ficha funcional**, **painel da Mestra** real, **rolagens**.
 - ❌ Confirmação de e-mail por link / SMTP; integração GitHub→Vercel (deploy automático).
@@ -259,7 +275,7 @@ Roadmap de implementação (cada passo entrega algo visível e testável; não s
 
 1. ✅ **Esqueleto + PWA — CONCLUÍDO E PUBLICADO.** Projeto Next.js, TypeScript, Tailwind com tokens, fontes, atmosfera CRT, manifest/ícones, service worker, **splash** e **login visual**. Construído em 13 blocos pequenos e publicado na Vercel (**https://prisma-tv-pi.vercel.app**). *Entregável atingido:* abre no celular como "app", com a marca PRISMA.
 2. ✅ **Autenticação e papéis — CONCLUÍDO E PUBLICADO (Etapa 2).** Supabase Auth (`@supabase/ssr`), `profile`+RLS+trigger, cadastro `/signup`, login/logout `/login`, rota protegida `/inicio` com papel, diferenciação mínima Jogador/Mestra. Publicado e testado no celular.
-3. ⏳ **Campanha e convite (PRÓXIMO — Etapa 3):** Mestra cria campanha, jogador entra por código. *Começa por planejamento técnico antes de escrever código.*
+3. ⏳ **Campanha e convite (Etapa 3 — EM PLANEJAMENTO, plano aprovado):** Mestra cria campanha, jogador entra por código/link; vínculo `campaign_member` com papel por campanha; RLS sem recursão. Decisões fixadas em `PLANO_DA_ETAPA_3.md`; **próximo passo é o Bloco 3.1 (banco)**. Ainda sem código/SQL.
 4. **Banco + ficha estática conectada:** tabelas; criar e salvar um personagem.
 5. **Regras de criação:** atributos (6/teto 3), 4 perícias, cálculo de Vida e Sanidade.
 6. **Ficha viva + trackers:** Vida/Sanidade/Impulso/Afinidade com estados e Ruptura.
@@ -272,4 +288,4 @@ Roadmap de implementação (cada passo entrega algo visível e testável; não s
 
 ---
 
-*Fim da Memória do Projeto. Este arquivo deve ser atualizado sempre que uma decisão nova for aprovada, para que o contexto nunca se perca. Última atualização: **conclusão e publicação da Etapa 2** (autenticação real com Supabase: `profile`+RLS+trigger, `/signup`, `/login` com login/logout, `/inicio` protegida com papel, diferenciação Jogador/Mestra; confirmação de e-mail não implementada / "Confirm email" desativado; Mestra definida manualmente; deploy via Vercel CLI).*
+*Fim da Memória do Projeto. Este arquivo deve ser atualizado sempre que uma decisão nova for aprovada, para que o contexto nunca se perca. Última atualização: **início do planejamento da Etapa 3** (campanha e convite) — plano e 10 decisões aprovados em `PLANO_DA_ETAPA_3.md`; ⏳ ainda sem banco, convite ou código de app (Etapa 2 permanece concluída e publicada).*
